@@ -2,8 +2,21 @@ import "./App.css";
 
 function App() {
   return (
-    <div>
-      <h1>This is going to be SimpleContactCrud app</h1>
+    <div className="container">
+      <button>Add</button>
+
+      <div className="tableContainer">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Mobile</th>
+              <th></th>
+            </tr>
+          </thead>
+        </table>
+      </div>
     </div>
   );
 }
