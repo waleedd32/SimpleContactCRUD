@@ -2,7 +2,7 @@ import React from "react";
 import "../App.css";
 import { MdClose } from "react-icons/md";
 
-const FormTable = () => {
+const FormTable = ({ handleClose }) => {
   return (
     <div>
       <div className="close-btn" onClick={handleClose}>
