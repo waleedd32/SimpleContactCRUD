@@ -5,10 +5,12 @@ import { MdClose } from "react-icons/md";
 const FormTable = ({ handleClose }) => {
   return (
     <div className="addContainer">
-      <div className="close-btn" onClick={handleClose}>
-        <MdClose />
-      </div>
-      <h1>Form Table </h1>
+      <form>
+        <div className="close-btn" onClick={handleClose}>
+          <MdClose />
+        </div>
+        <h1>Form Table </h1>
+      </form>
     </div>
   );
 };

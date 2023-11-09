@@ -47,6 +47,18 @@ body {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   position: relative;
 }
+.addContainer .close-btn {
+  font-size: 24px;
+  cursor: pointer;
+  color: #1f2937;
+  border: none;
+  background: none;
+  padding: 0;
+  position: absolute; /* Added line */
+  top: 10px; /* Adjust as needed */
+  right: 10px; /* Adjust as needed */
+  transition: 0.3s;
+}
 
 .tableContainer {
   margin-top: 30px;
