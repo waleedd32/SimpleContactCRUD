@@ -11,6 +11,18 @@ const FormTable = ({ handleClose }) => {
         </div>
         <h1>Form Table </h1>
       </form>
+      <div>
+        <label htmlFor="name">Name : </label>
+        <input type="text" id="name" name="name" />
+
+        <label htmlFor="email">Email : </label>
+        <input type="email" id="email" name="email" />
+
+        <label htmlFor="mobile">Mobile : </label>
+        <input type="number" id="mobile" name="mobile" />
+
+        <button className="btn">Submit</button>
+      </div>
     </div>
   );
 };
