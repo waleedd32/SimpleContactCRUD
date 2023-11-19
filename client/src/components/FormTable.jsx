@@ -2,7 +2,7 @@ import React from "react";
 import "../App.css";
 import { MdClose } from "react-icons/md";
 
-const FormTable = ({ handleClose }) => {
+const FormTable = ({ handleInputChange, handleClose, formData }) => {
   return (
     <div className="addContainer">
       <form>
@@ -11,7 +11,13 @@ const FormTable = ({ handleClose }) => {
         </div>
         <div>
           <label htmlFor="name">Name : </label>
-          <input type="text" id="name" name="name" />
+          <input
+            type="text"
+            id="name"
+            name="name"
+            onChange={handleInputChange}
+            value={formData.name}
+          />
 
           <label htmlFor="email">Email : </label>
           <input type="email" id="email" name="email" />

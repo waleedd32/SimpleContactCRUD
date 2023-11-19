@@ -6,12 +6,31 @@ import FormTable from "./components/FormTable";
 function App() {
   const [isAddSectionVisible, setIsAddSectionVisible] = useState(false);
 
+  const [formData, setFormData] = useState({
+    name: "",
+  });
+
+  const handleInputChange = (e) => {
+    const { value, name } = e.target;
+    setFormData((prevData) => {
+      return {
+        ...prevData,
+        [name]: value,
+      };
+    });
+  };
+
+  console.log("formdata", formData);
   return (
     <div className="container">
       <button onClick={() => setIsAddSectionVisible(true)}>Add</button>
 
       {isAddSectionVisible && (
-        <FormTable handleClose={() => setIsAddSectionVisible(false)} />
+        <FormTable
+          handleInputChange={handleInputChange}
+          handleClose={() => setIsAddSectionVisible(false)}
+          formData={formData}
+        />
       )}
       <div className="tableContainer">
         <table>
