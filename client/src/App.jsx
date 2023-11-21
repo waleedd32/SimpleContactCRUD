@@ -8,6 +8,8 @@ function App() {
 
   const [formData, setFormData] = useState({
     name: "",
+    email: "",
+    mobile: "",
   });
 
   const handleInputChange = (e) => {

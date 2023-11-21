@@ -20,10 +20,22 @@ const FormTable = ({ handleInputChange, handleClose, formData }) => {
           />
 
           <label htmlFor="email">Email : </label>
-          <input type="email" id="email" name="email" />
+          <input
+            type="email"
+            id="email"
+            name="email"
+            onChange={handleInputChange}
+            value={formData.email}
+          />
 
           <label htmlFor="mobile">Mobile : </label>
-          <input type="number" id="mobile" name="mobile" />
+          <input
+            type="number"
+            id="mobile"
+            name="mobile"
+            onChange={handleInputChange}
+            value={formData.mobile}
+          />
 
           <button className="btn">Submit</button>
         </div>
