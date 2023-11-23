@@ -2,10 +2,15 @@ import React from "react";
 import "../App.css";
 import { MdClose } from "react-icons/md";
 
-const FormTable = ({ handleInputChange, handleClose, formData }) => {
+const FormTable = ({
+  handleSubmit,
+  handleInputChange,
+  handleClose,
+  formData,
+}) => {
   return (
     <div className="addContainer">
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="close-btn" onClick={handleClose}>
           <MdClose />
         </div>

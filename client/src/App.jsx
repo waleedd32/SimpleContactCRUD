@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 
 import "./App.css";
 import FormTable from "./components/FormTable";
@@ -22,6 +23,12 @@ function App() {
     });
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = await axios.post("http://localhost:8080/create", formData);
+    console.log(data);
+  };
+
   console.log("formdata", formData);
   return (
     <div className="container">
@@ -29,6 +36,7 @@ function App() {
 
       {isAddSectionVisible && (
         <FormTable
+          handleSubmit={handleSubmit}
           handleInputChange={handleInputChange}
           handleClose={() => setIsAddSectionVisible(false)}
           formData={formData}
