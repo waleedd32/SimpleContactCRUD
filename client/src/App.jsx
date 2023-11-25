@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 import "./App.css";
@@ -13,6 +13,8 @@ function App() {
     mobile: "",
   });
 
+  const [dataList, setDataList] = useState([]);
+
   const handleInputChange = (e) => {
     const { value, name } = e.target;
     setFormData((prevData) => {
@@ -23,10 +25,33 @@ function App() {
     });
   };
 
+  console.log("datalist:", dataList);
+
+  const fetchData = async () => {
+    const data = await axios.get("http://localhost:8080");
+    console.log(data);
+    if (data.data.success) {
+      setDataList(data.data.data);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = await axios.post("http://localhost:8080/create", formData);
-    console.log(data);
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/create",
+        formData
+      );
+      if (response.data.success) {
+        fetchData();
+      }
+    } catch (error) {
+      console.error("Error submitting data", error);
+    }
   };
 
   console.log("formdata", formData);
