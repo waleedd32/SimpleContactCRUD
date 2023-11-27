@@ -33,7 +33,7 @@ To get started with this project, follow these steps:
 2. Install the dependencies for the frontend:
 
 ```bash
-yarn install]
+yarn install
 ```
 
 3. Install the dependencies for the backend:
