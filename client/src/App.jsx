@@ -47,7 +47,14 @@ function App() {
         formData
       );
       if (response.data.success) {
+        setIsAddSectionVisible(false);
+
         fetchData();
+        setFormData({
+          name: "",
+          email: "",
+          mobile: "",
+        });
       }
     } catch (error) {
       console.error("Error submitting data", error);
@@ -77,6 +84,22 @@ function App() {
               <th></th>
             </tr>
           </thead>
+          <tbody>
+            {dataList.length > 0 ? (
+              dataList.map((el) => {
+                console.log(el);
+                return (
+                  <tr>
+                    <td>{el.name}</td>
+                  </tr>
+                );
+              })
+            ) : (
+              <tr>
+                <td>No data</td>
+              </tr>
+            )}
+          </tbody>
         </table>
       </div>
     </div>
