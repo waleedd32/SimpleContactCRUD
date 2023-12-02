@@ -89,14 +89,22 @@ function App() {
               dataList.map((el) => {
                 console.log(el);
                 return (
-                  <tr>
+                  <tr key={el._id}>
                     <td>{el.name}</td>
+                    <td>{el.email}</td>
+                    <td>{el.mobile}</td>
+                    <td>
+                      <button className="btn btn-edit">Edit</button>
+                      <button className="btn btn-delete">Delete</button>
+                    </td>
                   </tr>
                 );
               })
             ) : (
               <tr>
-                <td>No data</td>
+                <td colSpan="4" style={{ textAlign: "center" }}>
+                  No data
+                </td>
               </tr>
             )}
           </tbody>
