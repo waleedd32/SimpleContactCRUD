@@ -89,7 +89,7 @@ function App() {
               dataList.map((el) => {
                 console.log(el);
                 return (
-                  <tr key={el._id}>
+                  <tr key={el.name + el.email}>
                     <td>{el.name}</td>
                     <td>{el.email}</td>
                     <td>{el.mobile}</td>
