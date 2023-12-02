@@ -24,6 +24,16 @@ body {
   margin: 20px;
 }
 
+.btn {
+  border: none;
+  padding: 10px 20px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 5px;
+  margin: 5px;
+}
+
 .addContainer {
   position: fixed;
   background-color: rgba(0, 0, 0, 0.5);
@@ -109,4 +119,23 @@ td {
 
 th {
   background-color: #eff6ff;
+}
+
+.btn-edit,
+.btn-delete {
+  font-size: 16px;
+  padding: 5px 10px;
+  margin: 0 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-edit {
+  background-color: #fbbf24;
+}
+
+.btn-delete {
+  background-color: #ef4444;
+  color: #fff;
 }
