@@ -14,6 +14,17 @@ app.get("/", async (req, res) => {
   res.json({ success: true, data: dataStore });
 });
 
+app.delete("/delete/:email", async (req, res) => {
+  const { email } = req.params;
+  const index = dataStore.findIndex((item) => item.email === email);
+  if (index !== -1) {
+    dataStore.splice(index, 1);
+    res.json({ success: true, message: "Data deleted successfully" });
+  } else {
+    res.status(404).json({ success: false, message: "Data not found" });
+  }
+});
+
 app.post("/create", async (req, res) => {
   dataStore.push(req.body);
   console.log("successfully sent to server", req.body);
