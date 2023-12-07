@@ -61,7 +61,21 @@ function App() {
     }
   };
 
+  const handleDelete = async (email) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:8080/delete/${email}`
+      );
+      if (response.data.success) {
+        fetchData();
+      }
+    } catch (error) {
+      console.error("Error deleting data", error);
+    }
+  };
+
   console.log("formdata", formData);
+
   return (
     <div className="container">
       <button onClick={() => setIsAddSectionVisible(true)}>Add</button>
@@ -95,7 +109,12 @@ function App() {
                     <td>{el.mobile}</td>
                     <td>
                       <button className="btn btn-edit">Edit</button>
-                      <button className="btn btn-delete">Delete</button>
+                      <button
+                        className="btn btn-delete"
+                        onClick={() => handleDelete(el.email)}
+                      >
+                        Delete
+                      </button>
                     </td>
                   </tr>
                 );
