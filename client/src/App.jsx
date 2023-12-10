@@ -6,8 +6,15 @@ import FormTable from "./components/FormTable";
 
 function App() {
   const [isAddSectionVisible, setIsAddSectionVisible] = useState(false);
+  const [isEditSectionVisible, setIsEditSectionVisible] = useState(false);
 
   const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    mobile: "",
+  });
+
+  const [formDataEdit, setFormDataEdit] = useState({
     name: "",
     email: "",
     mobile: "",
@@ -74,6 +81,11 @@ function App() {
     }
   };
 
+  const handleEdit = (el) => {
+    setFormDataEdit(el);
+    setIsEditSectionVisible(true);
+  };
+
   console.log("formdata", formData);
 
   return (
@@ -108,7 +120,12 @@ function App() {
                     <td>{el.email}</td>
                     <td>{el.mobile}</td>
                     <td>
-                      <button className="btn btn-edit">Edit</button>
+                      <button
+                        className="btn btn-edit"
+                        onClick={() => handleEdit(el)}
+                      >
+                        Edit
+                      </button>
                       <button
                         className="btn btn-delete"
                         onClick={() => handleDelete(el.email)}
