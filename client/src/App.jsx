@@ -81,6 +81,12 @@ function App() {
     }
   };
 
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+  };
+
+  const handleEditInputChange = async (e) => {};
+
   const handleEdit = (el) => {
     setFormDataEdit(el);
     setIsEditSectionVisible(true);
@@ -100,6 +106,16 @@ function App() {
           formData={formData}
         />
       )}
+
+      {isEditSectionVisible && (
+        <FormTable
+          handleSubmit={handleUpdate}
+          handleInputChange={handleEditInputChange}
+          handleClose={() => setIsEditSectionVisible(false)}
+          formData={formDataEdit}
+        />
+      )}
+
       <div className="tableContainer">
         <table>
           <thead>
