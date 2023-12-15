@@ -83,10 +83,23 @@ function App() {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
+    const data = await axios.put(`http://localhost:8080/update`, formDataEdit);
+    if (data.data.success) {
+      fetchData();
+      alert(data.data.message);
+      setIsEditSectionVisible(false);
+    }
   };
 
-  const handleEditInputChange = async (e) => {};
-
+  const handleEditInputChange = async (e) => {
+    const { value, name } = e.target;
+    setFormDataEdit((prevDataEdit) => {
+      return {
+        ...prevDataEdit,
+        [name]: value,
+      };
+    });
+  };
   const handleEdit = (el) => {
     setFormDataEdit(el);
     setIsEditSectionVisible(true);

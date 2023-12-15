@@ -14,6 +14,17 @@ app.get("/", async (req, res) => {
   res.json({ success: true, data: dataStore });
 });
 
+app.put("/update", async (req, res) => {
+  const { name, email, mobile } = req.body;
+  const index = dataStore.findIndex((item) => item.email === email);
+  if (index !== -1) {
+    dataStore[index] = { name, email, mobile };
+    res.json({ success: true, message: "Data updated successfully" });
+  } else {
+    res.status(404).json({ success: false, message: "Data not found" });
+  }
+});
+
 app.delete("/delete/:email", async (req, res) => {
   const { email } = req.params;
   const index = dataStore.findIndex((item) => item.email === email);
