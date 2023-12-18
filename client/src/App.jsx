@@ -7,7 +7,7 @@ import FormTable from "./components/FormTable";
 function App() {
   const [isAddSectionVisible, setIsAddSectionVisible] = useState(false);
   const [isEditSectionVisible, setIsEditSectionVisible] = useState(false);
-
+  const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -35,10 +35,16 @@ function App() {
   console.log("datalist:", dataList);
 
   const fetchData = async () => {
-    const data = await axios.get("http://localhost:8080");
-    console.log(data);
-    if (data.data.success) {
-      setDataList(data.data.data);
+    try {
+      const response = await axios.get("http://localhost:8080");
+      if (response.data.success) {
+        setDataList(response.data.data);
+      } else {
+        setError("Failed to fetch data");
+      }
+    } catch (error) {
+      console.log("error:", error.message);
+      setError(error.message || "Error fetching data");
     }
   };
 
@@ -109,6 +115,7 @@ function App() {
 
   return (
     <div className="container">
+      {error && <div className="error-message">{error}</div>}
       <button onClick={() => setIsAddSectionVisible(true)}>Add</button>
 
       {isAddSectionVisible && (
