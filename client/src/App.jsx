@@ -116,7 +116,9 @@ function App() {
   return (
     <div className="container">
       {error && <div className="error-message">{error}</div>}
-      <button onClick={() => setIsAddSectionVisible(true)}>Add</button>
+      <button onClick={() => setIsAddSectionVisible(true)} className="btn-add ">
+        Add
+      </button>
 
       {isAddSectionVisible && (
         <FormTable
