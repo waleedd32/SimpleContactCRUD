@@ -12,12 +12,18 @@ function App() {
     name: "",
     email: "",
     mobile: "",
+    country: "",
+    address: "",
+    gender: "",
   });
 
   const [formDataEdit, setFormDataEdit] = useState({
     name: "",
     email: "",
     mobile: "",
+    country: "",
+    address: "",
+    gender: "",
   });
 
   const [dataList, setDataList] = useState([]);
@@ -145,6 +151,9 @@ function App() {
               <th>Name</th>
               <th>Email</th>
               <th>Mobile</th>
+              <th>Country</th>
+              <th>Address</th>
+              <th>Gender</th>
               <th></th>
             </tr>
           </thead>
@@ -157,6 +166,9 @@ function App() {
                     <td>{el.name}</td>
                     <td>{el.email}</td>
                     <td>{el.mobile}</td>
+                    <td>{el.address}</td>
+                    <td>{el.country}</td>
+                    <td>{el.gender}</td>
                     <td>
                       <button
                         className="btn btn-edit"

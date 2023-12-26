@@ -15,34 +15,81 @@ const FormTable = ({
           <MdClose />
         </div>
         <div>
-          <label htmlFor="name">Name : </label>
+          <label htmlFor="name">Name: </label>
           <input
             type="text"
             id="name"
             name="name"
             onChange={handleInputChange}
             value={formData.name}
+            data-testid="name-input"
           />
+        </div>
 
-          <label htmlFor="email">Email : </label>
+        <div>
+          <label htmlFor="email">Email: </label>
           <input
             type="email"
             id="email"
             name="email"
             onChange={handleInputChange}
             value={formData.email}
+            data-testid="email-input"
           />
+        </div>
 
-          <label htmlFor="mobile">Mobile : </label>
+        <div>
+          <label htmlFor="mobile">Mobile: </label>
           <input
             type="number"
             id="mobile"
             name="mobile"
             onChange={handleInputChange}
             value={formData.mobile}
+            data-testid="mobile-input"
           />
+        </div>
 
-          <button className="btn">Submit</button>
+        <div>
+          <label htmlFor="country">Country: </label>
+          <input
+            type="text"
+            id="country"
+            name="country"
+            onChange={handleInputChange}
+            value={formData.country}
+            data-testid="country-input"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="address">Address: </label>
+          <input
+            type="text"
+            id="address"
+            name="address"
+            onChange={handleInputChange}
+            value={formData.address}
+            data-testid="address-input"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="gender">Gender: </label>
+          <select
+            name="gender"
+            onChange={handleInputChange}
+            value={formData.gender}
+            data-testid="gender-select"
+          >
+            <option value="">Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+          <button className="btn" data-testid="submit-button">
+            Submit
+          </button>{" "}
         </div>
       </form>
     </div>
