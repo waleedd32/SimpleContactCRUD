@@ -15,10 +15,10 @@ app.get("/", async (req, res) => {
 });
 
 app.put("/update", async (req, res) => {
-  const { name, email, mobile } = req.body;
+  const { name, email, mobile, country, address, gender } = req.body;
   const index = dataStore.findIndex((item) => item.email === email);
   if (index !== -1) {
-    dataStore[index] = { name, email, mobile };
+    dataStore[index] = { name, email, mobile, country, address, gender };
     res.json({ success: true, message: "Data updated successfully" });
   } else {
     res.status(404).json({ success: false, message: "Data not found" });
