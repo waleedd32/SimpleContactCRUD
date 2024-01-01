@@ -160,6 +160,10 @@ th {
   border-radius: 5px;
   text-align: center;
 }
+.form-error-message {
+  color: #dc2626;
+  margin-bottom: 10px;
+}
 
 .btn-add {
   background-color: #10b981;

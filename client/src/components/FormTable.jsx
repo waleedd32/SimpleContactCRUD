@@ -7,6 +7,7 @@ const FormTable = ({
   handleInputChange,
   handleClose,
   formData,
+  formError,
 }) => {
   return (
     <div className="addContainer">
@@ -87,6 +88,7 @@ const FormTable = ({
             <option value="female">Female</option>
             <option value="other">Other</option>
           </select>
+          {formError && <div className="form-error-message">{formError}</div>}
           <button className="btn" data-testid="submit-button">
             Submit
           </button>{" "}

@@ -8,6 +8,8 @@ function App() {
   const [isAddSectionVisible, setIsAddSectionVisible] = useState(false);
   const [isEditSectionVisible, setIsEditSectionVisible] = useState(false);
   const [error, setError] = useState("");
+  const [formError, setFormError] = useState("");
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -58,8 +60,22 @@ function App() {
     fetchData();
   }, []);
 
+  const validateForm = () => {
+    const { name, email, mobile, country, address, gender } = formData;
+    // Check if any of the fields are empty
+    return name && email && mobile && country && address && gender;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validate the form
+    if (!validateForm()) {
+      // Update state to show an error message
+      setFormError("Please fill in all fields.");
+      return;
+    }
+
     try {
       const response = await axios.post(
         "http://localhost:8080/create",
@@ -73,10 +89,15 @@ function App() {
           name: "",
           email: "",
           mobile: "",
+          country: "",
+          address: "",
+          gender: "",
         });
+        setFormError("");
       }
     } catch (error) {
       console.error("Error submitting data", error);
+      setError("Error submitting data");
     }
   };
 
@@ -132,6 +153,7 @@ function App() {
           handleInputChange={handleInputChange}
           handleClose={() => setIsAddSectionVisible(false)}
           formData={formData}
+          formError={formError}
         />
       )}
 
