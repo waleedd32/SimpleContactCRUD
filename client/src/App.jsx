@@ -114,11 +114,31 @@ function App() {
     }
   };
 
+  const validateFormEdit = () => {
+    const { name, email, mobile, country, address, gender } = formDataEdit;
+    return name && email && mobile && country && address && gender;
+  };
+
   const handleUpdate = async (e) => {
     e.preventDefault();
+
+    // Validate the form
+    if (!validateFormEdit()) {
+      // Update state to show an error message
+      setFormError("Please fill in all fields.");
+      return;
+    }
     const data = await axios.put(`http://localhost:8080/update`, formDataEdit);
     if (data.data.success) {
       fetchData();
+      setFormDataEdit({
+        name: "",
+        email: "",
+        mobile: "",
+        country: "",
+        address: "",
+        gender: "",
+      });
       alert(data.data.message);
       setIsEditSectionVisible(false);
     }
@@ -188,8 +208,8 @@ function App() {
                     <td>{el.name}</td>
                     <td>{el.email}</td>
                     <td>{el.mobile}</td>
-                    <td>{el.address}</td>
                     <td>{el.country}</td>
+                    <td>{el.address}</td>
                     <td>{el.gender}</td>
                     <td>
                       <button
