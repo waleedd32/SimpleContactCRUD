@@ -128,6 +128,7 @@ function App() {
       setFormError("Please fill in all fields.");
       return;
     }
+
     const data = await axios.put(`http://localhost:8080/update`, formDataEdit);
     if (data.data.success) {
       fetchData();
@@ -140,6 +141,7 @@ function App() {
         gender: "",
       });
       alert(data.data.message);
+      setFormError("");
       setIsEditSectionVisible(false);
     }
   };
@@ -183,6 +185,7 @@ function App() {
           handleInputChange={handleEditInputChange}
           handleClose={() => setIsEditSectionVisible(false)}
           formData={formDataEdit}
+          formError={formError}
         />
       )}
 
