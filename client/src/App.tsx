@@ -4,13 +4,31 @@ import axios from "axios";
 import "./App.css";
 import FormTable from "./components/FormTable";
 
-function App() {
+interface FormData {
+  name: string;
+  email: string;
+  mobile: string;
+  country: string;
+  address: string;
+  gender: string;
+}
+
+interface DataListEntry {
+  name: string;
+  email: string;
+  mobile: string;
+  country: string;
+  address: string;
+  gender: string;
+}
+
+const App: React.FC = () => {
   const [isAddSectionVisible, setIsAddSectionVisible] = useState(false);
   const [isEditSectionVisible, setIsEditSectionVisible] = useState(false);
   const [error, setError] = useState("");
   const [formError, setFormError] = useState("");
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
     mobile: "",
@@ -28,7 +46,7 @@ function App() {
     gender: "",
   });
 
-  const [dataList, setDataList] = useState([]);
+  const [dataList, setDataList] = useState<DataListEntry[]>([]);
 
   const handleInputChange = (e) => {
     const { value, name } = e.target;
@@ -243,6 +261,6 @@ function App() {
       </div>
     </div>
   );
-}
+};
 
 export default App;
