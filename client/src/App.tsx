@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import axios from "axios";
 
 import "./App.css";
@@ -48,7 +48,7 @@ const App: React.FC = () => {
 
   const [dataList, setDataList] = useState<DataListEntry[]>([]);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
     setFormData((prevData) => {
       return {
@@ -69,8 +69,8 @@ const App: React.FC = () => {
         setError("Failed to fetch data");
       }
     } catch (error) {
-      console.log("error:", error.message);
-      setError(error.message || "Error fetching data");
+      console.log("error:", (error as Error).message);
+      setError((error as Error).message || "Error fetching data");
     }
   };
 
@@ -84,7 +84,7 @@ const App: React.FC = () => {
     return name && email && mobile && country && address && gender;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // Validate the form
@@ -119,7 +119,7 @@ const App: React.FC = () => {
     }
   };
 
-  const handleDelete = async (email) => {
+  const handleDelete = async (email: string) => {
     try {
       const response = await axios.delete(
         `http://localhost:8080/delete/${email}`
@@ -137,7 +137,7 @@ const App: React.FC = () => {
     return name && email && mobile && country && address && gender;
   };
 
-  const handleUpdate = async (e) => {
+  const handleUpdate = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // Validate the form
@@ -164,7 +164,7 @@ const App: React.FC = () => {
     }
   };
 
-  const handleEditInputChange = async (e) => {
+  const handleEditInputChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
     setFormDataEdit((prevDataEdit) => {
       return {
@@ -173,7 +173,7 @@ const App: React.FC = () => {
       };
     });
   };
-  const handleEdit = (el) => {
+  const handleEdit = (el: DataListEntry) => {
     setFormDataEdit(el);
     setIsEditSectionVisible(true);
   };
@@ -251,7 +251,7 @@ const App: React.FC = () => {
               })
             ) : (
               <tr>
-                <td colSpan="4" style={{ textAlign: "center" }}>
+                <td colSpan={7} style={{ textAlign: "center" }}>
                   No data
                 </td>
               </tr>
