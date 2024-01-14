@@ -2,7 +2,26 @@ import React from "react";
 import "../App.css";
 import { MdClose } from "react-icons/md";
 
-const FormTable = ({
+interface FormData {
+  name: string;
+  email: string;
+  mobile: string;
+  country: string;
+  address: string;
+  gender: string;
+}
+
+interface FormTableProps {
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  handleInputChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => void;
+  handleClose: () => void;
+  formData: FormData;
+  formError: string;
+}
+
+const FormTable: React.FC<FormTableProps> = ({
   handleSubmit,
   handleInputChange,
   handleClose,
