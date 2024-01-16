@@ -48,7 +48,9 @@ const App: React.FC = () => {
 
   const [dataList, setDataList] = useState<DataListEntry[]>([]);
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { value, name } = e.target;
     setFormData((prevData) => {
       return {
@@ -164,7 +166,9 @@ const App: React.FC = () => {
     }
   };
 
-  const handleEditInputChange = async (e: ChangeEvent<HTMLInputElement>) => {
+  const handleEditInputChange = async (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { value, name } = e.target;
     setFormDataEdit((prevDataEdit) => {
       return {
