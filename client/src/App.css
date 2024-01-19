@@ -171,6 +171,9 @@ th {
   font-weight: bold;
   padding: 12px 20px;
   font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
 }
 
 .btn-add:hover,
