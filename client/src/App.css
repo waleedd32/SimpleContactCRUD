@@ -36,64 +36,83 @@ body {
 
 .addContainer {
   position: fixed;
-  background-color: rgba(0, 0, 0, 0.5);
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   display: flex;
-  justify-content: center;
   align-items: center;
-  z-index: 1000;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(5px);
 }
 
 .addContainer form {
-  width: 90%;
-  max-width: 500px;
-  background: #ffffff;
-  padding: 20px;
-  padding-top: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  background: #fff;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  width: 80%;
+  max-width: 450px;
+  margin: 20px;
+  animation: slide-in 0.5s ease-out;
   position: relative;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .addContainer label {
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #333;
 }
 
-.addContainer input {
+.addContainer input,
+.addContainer select {
   width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
+  padding: 12px;
+  margin-bottom: 20px;
+  border-radius: 8px;
   border: 1px solid #ddd;
-  border-radius: 5px;
+  font-size: 15px;
 }
 
 .addContainer .btn {
+  display: block;
   width: 100%;
-  background-color: #3b82f6;
+  padding: 10px;
+  font-size: 16px;
   color: #fff;
+  background-color: #007bff;
   border: none;
-  padding: 10px 20px;
-  font-size: 15px;
+  border-radius: 8px;
   cursor: pointer;
-  border-radius: 5px;
-  margin: 5px;
+  transition: background-color 0.3s;
+}
+
+.addContainer .btn:hover {
+  background-color: #0056b3;
 }
 
 .addContainer .close-btn {
-  font-size: 24px;
-  cursor: pointer;
-  color: #1f2937;
+  position: absolute;
+  top: 15px;
+  right: 15px;
   border: none;
   background: none;
-  padding: 0;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  transition: 0.3s;
+  cursor: pointer;
+  color: #666;
+  font-size: 24px;
 }
 
 .tableContainer {
