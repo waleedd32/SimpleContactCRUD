@@ -226,3 +226,14 @@ body {
     overflow-x: auto;
   }
 }
+
+@media (max-height: 660px) {
+  .addContainer {
+    overflow-y: auto;
+  }
+
+  .addContainer form {
+    max-height: 90%;
+    overflow-y: auto;
+  }
+}
