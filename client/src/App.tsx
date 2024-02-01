@@ -67,6 +67,7 @@ const App: React.FC = () => {
       const response = await axios.get("http://localhost:8080");
       if (response.data.success) {
         setDataList(response.data.data);
+        setError("");
       } else {
         setError("Failed to fetch data");
       }
@@ -115,11 +116,11 @@ const App: React.FC = () => {
         });
         setFormError("");
       } else {
-        setError("Failed to create entry. Please try again.");
+        setFormError("Failed to create entry. Please try again.");
       }
     } catch (error) {
       console.error("Error submitting data", error);
-      setError("Error submitting data");
+      setFormError("Error submitting data");
     }
   };
 
