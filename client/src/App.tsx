@@ -114,6 +114,8 @@ const App: React.FC = () => {
           gender: "",
         });
         setFormError("");
+      } else {
+        setError("Failed to create entry. Please try again.");
       }
     } catch (error) {
       console.error("Error submitting data", error);
@@ -128,9 +130,12 @@ const App: React.FC = () => {
       );
       if (response.data.success) {
         fetchData();
+      } else {
+        setError("Failed to delete the entry. Please try again.");
       }
     } catch (error) {
       console.error("Error deleting data", error);
+      setError("Error deleting data. Please try again.");
     }
   };
 
@@ -149,20 +154,30 @@ const App: React.FC = () => {
       return;
     }
 
-    const data = await axios.put(`http://localhost:8080/update`, formDataEdit);
-    if (data.data.success) {
-      fetchData();
-      setFormDataEdit({
-        name: "",
-        email: "",
-        mobile: "",
-        country: "",
-        address: "",
-        gender: "",
-      });
-      alert(data.data.message);
-      setFormError("");
-      setIsEditSectionVisible(false);
+    try {
+      const response = await axios.put(
+        `http://localhost:8080/update`,
+        formDataEdit
+      );
+      if (response.data.success) {
+        fetchData();
+        setFormDataEdit({
+          name: "",
+          email: "",
+          mobile: "",
+          country: "",
+          address: "",
+          gender: "",
+        });
+        alert(response.data.message);
+        setFormError("");
+        setIsEditSectionVisible(false);
+      } else {
+        setFormError("Failed to update entry. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error updating data", error);
+      setFormError("Error updating data. Please try again.");
     }
   };
 
