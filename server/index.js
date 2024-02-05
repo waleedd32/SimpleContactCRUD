@@ -1,5 +1,9 @@
 import express from "express";
 import cors from "cors";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 
@@ -42,4 +46,10 @@ app.post("/create", async (req, res) => {
   res.json({ success: true, message: "Data added successfully" });
 });
 
-app.listen(PORT, () => console.log("Server is runningon port:", PORT));
+mongoose
+  .connect(process.env.MONGO)
+  .then(() => {
+    console.log("connect to DB");
+    app.listen(PORT, () => console.log("Server is runningon port:", PORT));
+  })
+  .catch((err) => console.log(err));

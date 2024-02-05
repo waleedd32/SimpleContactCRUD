@@ -50,7 +50,7 @@ const App: React.FC = () => {
 
   const [dataList, setDataList] = useState<DataListEntry[]>([]);
 
-  axios.defaults.withCredentials = true;
+  // axios.defaults.withCredentials = true;
 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
