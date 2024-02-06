@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1707243042108" clover="3.2.0">
-  <project timestamp="1707243042108" name="All files">
+<coverage generated="1707251346799" clover="3.2.0">
+  <project timestamp="1707251346799" name="All files">
     <metrics statements="120" coveredstatements="120" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1" elements="123" coveredelements="123" complexity="0" loc="120" ncloc="120" packages="1" files="1" classes="1"/>
     <file name="FormTable.tsx" path="C:\Users\valid\OneDrive\Tyopoyta\validev\SimpleContactCRUD\client\src\components\FormTable.tsx">
       <metrics statements="120" coveredstatements="120" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>

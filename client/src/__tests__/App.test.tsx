@@ -1,9 +1,34 @@
-import { render, screen } from "@testing-library/react";
-import { describe, it, expect } from "vitest";
+import { render, screen, waitFor } from "@testing-library/react";
+import { describe, it, expect, vi } from "vitest";
+import axios from "axios";
 
 import App from "../App";
 
-describe("Table Headers", () => {
+vi.mock("axios");
+
+const mockData = {
+  data: {
+    success: true,
+    data: [
+      {
+        name: "John Doe",
+        email: "john@example.com",
+        mobile: "1234567890",
+        country: "USA",
+        address: "123 Main St",
+        gender: "male",
+      },
+    ],
+  },
+};
+
+const mockedAxios = axios as any;
+
+beforeEach(() => {
+  mockedAxios.get.mockResolvedValue(mockData);
+});
+
+describe("App Component", () => {
   it("should render all table headers correctly", () => {
     render(<App />);
 
@@ -14,5 +39,14 @@ describe("Table Headers", () => {
     expect(screen.getByText("Country")).toBeInTheDocument();
     expect(screen.getByText("Address")).toBeInTheDocument();
     expect(screen.getByText("Gender")).toBeInTheDocument();
+  });
+
+  it("fetches data on mount and displays it", async () => {
+    render(<App />);
+
+    await waitFor(() => {
+      expect(screen.getByText("John Doe")).toBeInTheDocument();
+      expect(screen.getByText("john@example.com")).toBeInTheDocument();
+    });
   });
 });
