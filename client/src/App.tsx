@@ -51,7 +51,7 @@ const App: React.FC = () => {
 
   const [dataList, setDataList] = useState<DataListEntry[]>([]);
 
-  // axios.defaults.withCredentials = true;
+  axios.defaults.withCredentials = true;
 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -69,7 +69,9 @@ const App: React.FC = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:8080");
+      const response = await axios.get(
+        "https://simple-contact-backend.vercel.app"
+      );
       if (response.data.success) {
         setDataList(response.data.data);
         setError("");
@@ -104,7 +106,7 @@ const App: React.FC = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/create",
+        "https://simple-contact-backend.vercel.app/create",
         formData
       );
       if (response.data.success) {
@@ -132,7 +134,7 @@ const App: React.FC = () => {
   const handleDelete = async (email: string) => {
     try {
       const response = await axios.delete(
-        `http://localhost:8080/delete/${email}`
+        `https://simple-contact-backend.vercel.app/delete/${email}`
       );
       if (response.data.success) {
         fetchData();
@@ -162,7 +164,7 @@ const App: React.FC = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:8080/update`,
+        `https://simple-contact-backend.vercel.app/update`,
         formDataEdit
       );
       if (response.data.success) {

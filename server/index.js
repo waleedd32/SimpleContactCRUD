@@ -9,14 +9,13 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:5174"],
+    origin: [process.env.CORS_ORIGIN],
     methods: ["POST", "GET", "PUT", "DELETE"],
     credentials: true,
   })
 );
 
 app.use(express.json());
-app.use(cors());
 
 const PORT = process.env.PORT || 8080;
 
