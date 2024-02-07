@@ -20,6 +20,12 @@ app.use(cors());
 
 const PORT = process.env.PORT || 8080;
 
+// Connecting to MongoDB
+mongoose
+  .connect(process.env.MONGO)
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((err) => console.error("Could not connect to MongoDB:", err));
+
 //schema
 const UserSchema = mongoose.Schema(
   {
@@ -35,8 +41,6 @@ const UserSchema = mongoose.Schema(
 
 const UserModel = mongoose.model("User", UserSchema);
 
-const dataStore = [];
-
 // Geting all users
 app.get("/", async (req, res) => {
   const users = await UserModel.find({});
@@ -50,32 +54,26 @@ app.post("/create", async (req, res) => {
   res.send({ success: true, message: "Data added successfully", data: user });
 });
 
+// Updating a user
 app.put("/update", async (req, res) => {
-  const { name, email, mobile, country, address, gender } = req.body;
-  const index = dataStore.findIndex((item) => item.email === email);
-  if (index !== -1) {
-    dataStore[index] = { name, email, mobile, country, address, gender };
+  const { _id, ...updateData } = req.body;
+  const updateResult = await UserModel.updateOne({ _id: _id }, updateData);
+  if (updateResult.matchedCount > 0) {
     res.json({ success: true, message: "Data updated successfully" });
   } else {
     res.status(404).json({ success: false, message: "Data not found" });
   }
 });
 
-app.delete("/delete/:email", async (req, res) => {
-  const { email } = req.params;
-  const index = dataStore.findIndex((item) => item.email === email);
-  if (index !== -1) {
-    dataStore.splice(index, 1);
+// Deleting a user
+app.delete("/delete/:id", async (req, res) => {
+  const { id } = req.params;
+  const result = await UserModel.deleteOne({ _id: id });
+  if (result.deletedCount > 0) {
     res.json({ success: true, message: "Data deleted successfully" });
   } else {
     res.status(404).json({ success: false, message: "Data not found" });
   }
 });
 
-mongoose
-  .connect(process.env.MONGO)
-  .then(() => {
-    console.log("connect to DB");
-    app.listen(PORT, () => console.log("Server is runningon port:", PORT));
-  })
-  .catch((err) => console.log(err));
+app.listen(PORT, () => console.log(`Server is running on port: ${PORT}`));
