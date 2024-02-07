@@ -69,9 +69,7 @@ const App: React.FC = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(
-        "https://simple-contact-backend.vercel.app"
-      );
+      const response = await axios.get("/");
       if (response.data.success) {
         setDataList(response.data.data);
         setError("");
@@ -105,10 +103,7 @@ const App: React.FC = () => {
     }
 
     try {
-      const response = await axios.post(
-        "https://simple-contact-backend.vercel.app/create",
-        formData
-      );
+      const response = await axios.post("/create", formData);
       if (response.data.success) {
         setIsAddSectionVisible(false);
 
@@ -131,11 +126,9 @@ const App: React.FC = () => {
     }
   };
 
-  const handleDelete = async (email: string) => {
+  const handleDelete = async (id: string) => {
     try {
-      const response = await axios.delete(
-        `https://simple-contact-backend.vercel.app/delete/${email}`
-      );
+      const response = await axios.delete("/delete/" + id);
       if (response.data.success) {
         fetchData();
       } else {
@@ -163,10 +156,7 @@ const App: React.FC = () => {
     }
 
     try {
-      const response = await axios.put(
-        `https://simple-contact-backend.vercel.app/update`,
-        formDataEdit
-      );
+      const response = await axios.put("/update", formDataEdit);
       if (response.data.success) {
         fetchData();
         setFormDataEdit({
