@@ -210,7 +210,7 @@ body {
   box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.5);
 }
 
-@media (max-width: 655px) {
+@media (max-width: 689px) {
   .container {
     width: 95vw;
     margin: 20px auto;
@@ -225,6 +225,9 @@ body {
   .tableContainer {
     overflow-x: auto;
   }
+  .container td {
+    word-break: normal;
+  }
 }
 
 @media (max-height: 660px) {
@@ -235,5 +238,11 @@ body {
   .addContainer form {
     max-height: 90%;
     overflow-y: auto;
+  }
+}
+
+@media (min-width: 690px) {
+  .container td {
+    word-break: break-word;
   }
 }
