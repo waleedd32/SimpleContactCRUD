@@ -47,6 +47,10 @@ describe("App Component", () => {
     await waitFor(() => {
       expect(screen.getByText("John Doe")).toBeInTheDocument();
       expect(screen.getByText("john@example.com")).toBeInTheDocument();
+      expect(screen.getByText("1234567890")).toBeInTheDocument();
+      expect(screen.getByText("USA")).toBeInTheDocument();
+      expect(screen.getByText("123 Main St")).toBeInTheDocument();
+      expect(screen.getByText("male")).toBeInTheDocument();
     });
   });
 });

@@ -7,15 +7,47 @@ dotenv.config();
 
 const app = express();
 
+app.use(
+  cors({
+    origin: ["http://localhost:5174"],
+    methods: ["POST", "GET", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 app.use(cors());
 
 const PORT = process.env.PORT || 8080;
 
+//schema
+const UserSchema = mongoose.Schema(
+  {
+    name: String,
+    email: String,
+    mobile: String,
+    country: String,
+    address: String,
+    gender: String,
+  },
+  { timestamps: true }
+);
+
+const UserModel = mongoose.model("User", UserSchema);
+
 const dataStore = [];
 
+// Geting all users
 app.get("/", async (req, res) => {
-  res.json({ success: true, data: dataStore });
+  const users = await UserModel.find({});
+  res.json({ success: true, data: users });
+});
+
+// Creating a new user
+app.post("/create", async (req, res) => {
+  const user = new UserModel(req.body);
+  await user.save();
+  res.send({ success: true, message: "Data added successfully", data: user });
 });
 
 app.put("/update", async (req, res) => {
@@ -38,12 +70,6 @@ app.delete("/delete/:email", async (req, res) => {
   } else {
     res.status(404).json({ success: false, message: "Data not found" });
   }
-});
-
-app.post("/create", async (req, res) => {
-  dataStore.push(req.body);
-  console.log("successfully sent to server", req.body);
-  res.json({ success: true, message: "Data added successfully" });
 });
 
 mongoose

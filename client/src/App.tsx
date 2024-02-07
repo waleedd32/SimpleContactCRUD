@@ -14,6 +14,7 @@ interface FormData {
 }
 
 interface DataListEntry {
+  _id: string;
   name: string;
   email: string;
   mobile: string;
@@ -249,7 +250,7 @@ const App: React.FC = () => {
               dataList.map((el) => {
                 console.log(el);
                 return (
-                  <tr key={el.name + el.email}>
+                  <tr key={el._id}>
                     <td>{el.name}</td>
                     <td>{el.email}</td>
                     <td>{el.mobile}</td>
@@ -265,7 +266,7 @@ const App: React.FC = () => {
                       </button>
                       <button
                         className="btn btn-delete"
-                        onClick={() => handleDelete(el.email)}
+                        onClick={() => handleDelete(el._id)}
                       >
                         Delete
                       </button>
