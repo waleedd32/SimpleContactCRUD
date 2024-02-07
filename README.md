@@ -24,7 +24,13 @@ Simple Contact is a web application designed to manage contacts efficiently. Use
 
 (Currently working on implementing additional features and improving the UI/UX.)
 
-## Prerequisites
+## Features
+
+## Live Demo
+
+Made with :heart: by Valid
+
+- Try out the application here: [Simple Contact](https://simple-contact.vercel.app/)
 
 Before running this project, make sure you have the following installed:
 
