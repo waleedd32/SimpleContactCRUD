@@ -1,4 +1,4 @@
-# ReactJS Contact Management App (In Progress)
+# Simple Contact Application (In Progress)
 
 ## Project Status
 
@@ -6,14 +6,21 @@
 
 ## Description
 
-This project is a contact management application built with ReactJS and Vite for the frontend and ExpressJS with MongoDB for the backend. It allows users to add, edit, delete, and view contact details such as name, email, and mobile number.
+Simple Contact is a web application designed to manage contacts efficiently. Users can add, edit, delete, and view contact information, including name, email, mobile number, country, address, and gender. This project demonstrates full-stack development capabilities using ReactJS, Express, MongoDB, and Node.js.
 
 ## Features
 
-- Add new contacts
-- Edit existing contacts
-- Delete contacts
-- View a list of all contacts
+- Create Contact: Add new contact details to the database.
+- Read Contacts: View a list of all saved contacts.
+- Update Contact: Edit details of existing contacts.
+- Delete Contact: Remove contact information from the database.
+
+## Features
+
+- Front-end: ReactJS
+- Back-end: Node.js, Express
+- Database: MongoDB
+- Others: axios for API requests, cors for cross-origin resource sharing, mongoose for object data modeling (ODM), dotenv for environment variable management.
 
 (Currently working on implementing additional features and improving the UI/UX.)
 
@@ -22,8 +29,8 @@ This project is a contact management application built with ReactJS and Vite for
 Before running this project, make sure you have the following installed:
 
 - Node.js
-- Yarn
 - MongoDB
+- Yarn (optional, npm can be used as well)
 
 ## Installation
 
