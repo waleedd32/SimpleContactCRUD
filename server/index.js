@@ -11,7 +11,7 @@ app.use(
   cors({
     origin: ["https://simple-contact.vercel.app"],
     methods: ["POST", "GET", "PUT", "DELETE"],
-    credentials: true,
+    // credentials: true,
   })
 );
 
