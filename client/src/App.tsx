@@ -199,6 +199,8 @@ const App: React.FC = () => {
 
   return (
     <div className="container">
+      <div>Simple Contact </div>
+
       {error && <div className="error-message">{error}</div>}
       <button onClick={() => setIsAddSectionVisible(true)} className="btn-add ">
         Add

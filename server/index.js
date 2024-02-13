@@ -10,6 +10,7 @@ const app = express();
 app.use(
   cors({
     origin: ["https://simple-contact.vercel.app"],
+    // origin: ["http://localhost:5173"],
     methods: ["POST", "GET", "PUT", "DELETE"],
     credentials: true,
   })
