@@ -29,6 +29,7 @@ dist-ssr
 
 # Jest test coverage
 coverage/
+client/coverage/
 
 # Istanbul coverage
 .coverage/

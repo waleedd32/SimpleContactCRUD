@@ -210,7 +210,10 @@ const App: React.FC = () => {
         <FormTable
           handleSubmit={handleSubmit}
           handleInputChange={handleInputChange}
-          handleClose={() => setIsAddSectionVisible(false)}
+          handleClose={() => {
+            setIsAddSectionVisible(false);
+            setFormError("");
+          }}
           formData={formData}
           formError={formError}
         />
@@ -220,7 +223,10 @@ const App: React.FC = () => {
         <FormTable
           handleSubmit={handleUpdate}
           handleInputChange={handleEditInputChange}
-          handleClose={() => setIsEditSectionVisible(false)}
+          handleClose={() => {
+            setIsEditSectionVisible(false);
+            setFormError("");
+          }}
           formData={formDataEdit}
           formError={formError}
         />
