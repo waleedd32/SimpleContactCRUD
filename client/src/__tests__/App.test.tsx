@@ -121,4 +121,49 @@ describe("App Component Tests", () => {
       expect(screen.getByText("female")).toBeInTheDocument();
     });
   });
+
+  it("toggles the visibility of the Add section when the Add button is clicked", async () => {
+    render(<App />);
+    const addButton = screen.getByText("Add");
+
+    // in the beginning, the form should not be visible
+    let form = screen.queryByTestId("form-table");
+    expect(form).not.toBeInTheDocument();
+
+    // After the 'Add' button is clicked, form should be visible
+    fireEvent.click(addButton);
+
+    // here using waitFor to wait for the form to become visible
+    await waitFor(() => {
+      form = screen.queryByTestId("form-table");
+      expect(form).toBeInTheDocument();
+    });
+
+    //  simulating closing the form to hide it again
+    const closeButton = screen.getByTestId("close-button");
+    fireEvent.click(closeButton);
+
+    //  using waitFor to wait for the form to be removed from the document
+    await waitFor(() => {
+      form = screen.queryByTestId("form-table");
+      expect(form).not.toBeInTheDocument();
+    });
+  });
+
+  it("displays a validation error message when trying to submit an incomplete form", async () => {
+    render(<App />);
+    const addButton = screen.getByText("Add");
+
+    // Open the form
+    fireEvent.click(addButton);
+
+    // Attempt to submit the form without filling out any fields
+    const submitButton = screen.getByTestId("submit-button");
+    fireEvent.click(submitButton);
+
+    // here checking for the presence of a validation error message
+    const errorMessage = await screen.findByText(/Please fill in all fields/i);
+
+    expect(errorMessage).toBeInTheDocument();
+  });
 });

@@ -29,9 +29,13 @@ const FormTable: React.FC<FormTableProps> = ({
   formError,
 }) => {
   return (
-    <div className="addContainer">
+    <div className="addContainer" data-testid="form-table">
       <form onSubmit={handleSubmit}>
-        <div className="close-btn" onClick={handleClose}>
+        <div
+          className="close-btn"
+          onClick={handleClose}
+          data-testid="close-button"
+        >
           <MdClose />
         </div>
         <div>
