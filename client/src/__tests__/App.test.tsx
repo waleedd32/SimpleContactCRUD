@@ -16,6 +16,7 @@ describe("App Component Tests", () => {
         success: true,
         data: [
           {
+            _id: "1",
             name: "John Doe",
             email: "john@example.com",
             mobile: "1234567890",
@@ -165,5 +166,17 @@ describe("App Component Tests", () => {
     const errorMessage = await screen.findByText(/Please fill in all fields/i);
 
     expect(errorMessage).toBeInTheDocument();
+  });
+
+  it("displays an error message when fetching data fails", async () => {
+    // Mocking axios.get to reject with an error
+    mockedAxios.get.mockRejectedValueOnce(new Error("Error fetching data"));
+
+    render(<App />);
+
+    // Waiting for the component to update based on the rejected promise
+    await waitFor(() => {
+      expect(screen.getByText("Error fetching data")).toBeInTheDocument();
+    });
   });
 });

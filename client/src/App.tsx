@@ -259,12 +259,14 @@ const App: React.FC = () => {
                     <td>{el.gender}</td>
                     <td>
                       <button
+                        data-testid="edit-button"
                         className="btn btn-edit"
                         onClick={() => handleEdit(el)}
                       >
                         Edit
                       </button>
                       <button
+                        data-testid="delete-button"
                         className="btn btn-delete"
                         onClick={() => handleDelete(el._id)}
                       >
