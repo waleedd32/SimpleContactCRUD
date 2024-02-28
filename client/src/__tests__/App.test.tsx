@@ -179,4 +179,87 @@ describe("App Component Tests", () => {
       expect(screen.getByText("Error fetching data")).toBeInTheDocument();
     });
   });
+
+  it("allows editing an existing entry and displays the updated data", async () => {
+    // Initial mock data for the GET request
+    mockedAxios.get.mockResolvedValueOnce({
+      data: {
+        success: true,
+        data: [
+          {
+            _id: "2",
+            name: "John Doe",
+            email: "john@example.com",
+            mobile: "1234567890",
+            country: "USA",
+            address: "123 Main St",
+            gender: "male",
+          },
+        ],
+      },
+    });
+
+    // Mocking the PUT request response
+    mockedAxios.put.mockResolvedValueOnce({
+      data: { success: true, message: "Data updated successfully" },
+    });
+
+    // Mocking the GET request to return updated data after the edit
+    mockedAxios.get.mockResolvedValueOnce({
+      data: {
+        success: true,
+        data: [
+          {
+            _id: "2",
+            name: "John Updated",
+            email: "johnupdated@example.com",
+
+            mobile: "0987654321",
+            country: "Canada",
+            address: "456 Elm St",
+            gender: "male",
+          },
+        ],
+      },
+    });
+
+    render(<App />);
+
+    // Waiting for the initial data to load
+    await waitFor(() => screen.getByText("John Doe"));
+
+    // Simulate clicking the edit button
+    fireEvent.click(screen.getByTestId("edit-button"));
+
+    // Simulate editing the form fields
+
+    fireEvent.change(screen.getByTestId("name-input"), {
+      target: { value: "John Updated" },
+    });
+    fireEvent.change(screen.getByTestId("address-input"), {
+      target: { value: "456 Elm St" },
+    });
+
+    // Simulating form submission
+    fireEvent.click(screen.getByTestId("submit-button"));
+
+    // Wait for the PUT request to be made and for the component to re-render with updated data
+    await waitFor(() => expect(mockedAxios.put).toHaveBeenCalled());
+
+    expect(mockedAxios.put).toHaveBeenCalledWith(
+      "/update", // Our URL or endpoint
+      {
+        // This is the payload we expect to be sent in the update.
+        _id: "2",
+        name: "John Updated",
+        email: "john@example.com",
+        mobile: "1234567890",
+        country: "USA",
+        address: "456 Elm St",
+        gender: "male",
+      }
+    );
+    // Checking that the updated data is displayed
+    expect(screen.getByText("John Updated")).toBeInTheDocument();
+  });
 });
