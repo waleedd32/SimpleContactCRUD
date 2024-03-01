@@ -232,12 +232,23 @@ describe("App Component Tests", () => {
     fireEvent.click(screen.getByTestId("edit-button"));
 
     // Simulate editing the form fields
-
     fireEvent.change(screen.getByTestId("name-input"), {
       target: { value: "John Updated" },
     });
+    fireEvent.change(screen.getByTestId("email-input"), {
+      target: { value: "johnupdated@example.com" },
+    });
+    fireEvent.change(screen.getByTestId("mobile-input"), {
+      target: { value: "0987654321" },
+    });
+    fireEvent.change(screen.getByTestId("country-input"), {
+      target: { value: "Canada" },
+    });
     fireEvent.change(screen.getByTestId("address-input"), {
       target: { value: "456 Elm St" },
+    });
+    fireEvent.change(screen.getByTestId("gender-select"), {
+      target: { value: "male" },
     });
 
     // Simulating form submission
@@ -252,14 +263,19 @@ describe("App Component Tests", () => {
         // This is the payload we expect to be sent in the update.
         _id: "2",
         name: "John Updated",
-        email: "john@example.com",
-        mobile: "1234567890",
-        country: "USA",
+        email: "johnupdated@example.com",
+        mobile: "0987654321",
+        country: "Canada",
         address: "456 Elm St",
         gender: "male",
       }
     );
     // Checking that the updated data is displayed
     expect(screen.getByText("John Updated")).toBeInTheDocument();
+    expect(screen.getByText("johnupdated@example.com")).toBeInTheDocument();
+    expect(screen.getByText("0987654321")).toBeInTheDocument();
+    expect(screen.getByText("Canada")).toBeInTheDocument();
+    expect(screen.getByText("456 Elm St")).toBeInTheDocument();
+    expect(screen.getByText("male")).toBeInTheDocument();
   });
 });
