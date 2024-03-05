@@ -9,8 +9,16 @@ vi.mock("axios");
 const mockedAxios = axios as any;
 
 describe("App Component Tests", () => {
-  beforeEach(() => {
-    // Set up the default mock response for axios.get to return the initial data for each test
+  afterEach(() => {
+    // Clearing all mock setups and histories between tests to ensure isolation and consistent mock behavior.
+    vi.resetAllMocks();
+
+    // these if we need to reset specific mock implementations or return values, we can do so like this:
+    // mockedAxios.get.mockReset();
+    // mockedAxios.post.mockReset();
+  });
+  // Testing to check if all table headers are rendered correctly
+  it("should render all table headers correctly", async () => {
     mockedAxios.get.mockResolvedValue({
       data: {
         success: true,
@@ -27,20 +35,35 @@ describe("App Component Tests", () => {
         ],
       },
     });
-  });
-
-  // Testing to check if all table headers are rendered correctly
-  it("should render all table headers correctly", async () => {
     render(<App />);
-    expect(screen.getByText("Name")).toBeInTheDocument();
-    expect(screen.getByText("Email")).toBeInTheDocument();
-    expect(screen.getByText("Mobile")).toBeInTheDocument();
-    expect(screen.getByText("Country")).toBeInTheDocument();
-    expect(screen.getByText("Address")).toBeInTheDocument();
-    expect(screen.getByText("Gender")).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.getByText("Name")).toBeInTheDocument();
+      expect(screen.getByText("Email")).toBeInTheDocument();
+      expect(screen.getByText("Mobile")).toBeInTheDocument();
+      expect(screen.getByText("Country")).toBeInTheDocument();
+      expect(screen.getByText("Address")).toBeInTheDocument();
+      expect(screen.getByText("Gender")).toBeInTheDocument();
+    });
   });
 
   it("fetches data on mount and displays it", async () => {
+    mockedAxios.get.mockResolvedValue({
+      data: {
+        success: true,
+        data: [
+          {
+            _id: "1",
+            name: "John Doe",
+            email: "john@example.com",
+            mobile: "1234567890",
+            country: "USA",
+            address: "123 Main St",
+            gender: "male",
+          },
+        ],
+      },
+    });
     render(<App />);
     // Testing to check that initial data is fetched and displayed
     await waitFor(() => {
