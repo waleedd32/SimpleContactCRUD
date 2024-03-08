@@ -249,8 +249,14 @@ describe("App Component Tests", () => {
     render(<App />);
 
     // Waiting for the initial data to load
-    await waitFor(() => screen.getByText("John Doe"));
-
+    await waitFor(() => {
+      expect(screen.getByText("John Doe")).toBeInTheDocument();
+      expect(screen.getByText("john@example.com")).toBeInTheDocument();
+      expect(screen.getByText("1234567890")).toBeInTheDocument();
+      expect(screen.getByText("USA")).toBeInTheDocument();
+      expect(screen.getByText("123 Main St")).toBeInTheDocument();
+      expect(screen.getByText("male")).toBeInTheDocument();
+    });
     // Simulate clicking the edit button
     fireEvent.click(screen.getByTestId("edit-button"));
 
@@ -300,5 +306,79 @@ describe("App Component Tests", () => {
     expect(screen.getByText("Canada")).toBeInTheDocument();
     expect(screen.getByText("456 Elm St")).toBeInTheDocument();
     expect(screen.getByText("male")).toBeInTheDocument();
+  });
+
+  it("allows deleting an entry and updates the displayed list", async () => {
+    // Initial mock data for the GET request
+    mockedAxios.get.mockResolvedValueOnce({
+      data: {
+        success: true,
+        data: [
+          {
+            _id: "1",
+            name: "John Doe",
+            email: "john@example.com",
+            mobile: "1234567890",
+            country: "USA",
+            address: "123 Main St",
+            gender: "male",
+          },
+          // Here we add another entry to ensure we can test the deletion effect
+          {
+            _id: "2",
+            name: "Jane Doe",
+            email: "jane@example.com",
+            mobile: "0987654321",
+            country: "Canada",
+            address: "456 Maple St",
+            gender: "female",
+          },
+        ],
+      },
+    });
+
+    // Mocking the DELETE request response
+    mockedAxios.delete.mockResolvedValueOnce({
+      data: { success: true, message: "Data deleted successfully" },
+    });
+
+    // Mocking the GET request to return updated data after deleting the entry
+    mockedAxios.get.mockResolvedValueOnce({
+      data: {
+        success: true,
+        data: [
+          // Here we are returning only one entry after deletion to simulate the entry being successfully deleted
+          {
+            _id: "2",
+            name: "Jane Doe",
+            email: "jane@example.com",
+            mobile: "0987654321",
+            country: "Canada",
+            address: "456 Maple St",
+            gender: "female",
+          },
+        ],
+      },
+    });
+
+    render(<App />);
+
+    // Waiting for the initial data to load
+    await waitFor(() => screen.getByText("John Doe"));
+
+    // Finding and clicking the delete button for the first entry
+    const deleteButtons = screen.getAllByTestId("delete-button");
+    fireEvent.click(deleteButtons[0]); //  John Doe
+
+    // Waiting for the DELETE request to be made for id 1
+    await waitFor(() =>
+      expect(mockedAxios.delete).toHaveBeenCalledWith("/delete/1")
+    );
+
+    // Here we verify that list is updated and the deleted entry is no longer displayed
+    await waitFor(() => {
+      expect(screen.queryByText("John Doe")).not.toBeInTheDocument();
+      expect(screen.getByText("Jane Doe")).toBeInTheDocument(); // The other entry should still be present
+    });
   });
 });
