@@ -381,4 +381,43 @@ describe("App Component Tests", () => {
       expect(screen.getByText("Jane Doe")).toBeInTheDocument(); // The other entry should still be present
     });
   });
+
+  it("should display an error message when an attempt to delete an entry fails due to a network error", async () => {
+    // Mocking the axios.get call to return some initial data
+    mockedAxios.get.mockResolvedValueOnce({
+      data: {
+        success: true,
+        data: [
+          {
+            _id: "1",
+            name: "John Doe",
+            email: "john@example.com",
+            mobile: "1234567890",
+            country: "USA",
+            address: "123 Main St",
+            gender: "male",
+          },
+        ],
+      },
+    });
+
+    // Mocking the axios.delete call to reject with an error
+    mockedAxios.delete.mockRejectedValueOnce(
+      new Error("Error deleting data. Please try again.")
+    );
+
+    render(<App />);
+
+    // Waiting for the initial data to load
+    await waitFor(() => screen.getByText("John Doe"));
+
+    fireEvent.click(screen.getByTestId("delete-button"));
+
+    // Waiting for the error message to be displayed
+    await waitFor(() => {
+      expect(
+        screen.getByText("Error deleting data. Please try again.")
+      ).toBeInTheDocument();
+    });
+  });
 });
