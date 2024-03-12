@@ -420,4 +420,43 @@ describe("App Component Tests", () => {
       ).toBeInTheDocument();
     });
   });
+
+  it("should display a specific error message when an attempt to delete an entry fails due to an unsuccessful response from the server", async () => {
+    // Mocking the axios.get call to return some initial data
+    mockedAxios.get.mockResolvedValueOnce({
+      data: {
+        success: true,
+        data: [
+          {
+            _id: "1",
+            name: "John Doe",
+            email: "john@example.com",
+            mobile: "1234567890",
+            country: "USA",
+            address: "123 Main St",
+            gender: "male",
+          },
+        ],
+      },
+    });
+
+    // Mocking the axios.delete call to resolve with an unsuccessful response
+    mockedAxios.delete.mockResolvedValueOnce({
+      data: { success: false },
+    });
+
+    render(<App />);
+
+    // Waiting for the initial data to load
+    await waitFor(() => screen.getByText("John Doe"));
+
+    fireEvent.click(screen.getByTestId("delete-button"));
+
+    // Waiting for the error message to be displayed
+    await waitFor(() => {
+      expect(
+        screen.getByText("Failed to delete the entry. Please try again.")
+      ).toBeInTheDocument();
+    });
+  });
 });
