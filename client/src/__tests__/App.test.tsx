@@ -191,6 +191,20 @@ describe("App Component Tests", () => {
     expect(errorMessage).toBeInTheDocument();
   });
 
+  it("should display 'Failed to fetch data' error message when the server response is unsuccessful", async () => {
+    // Mocking axios.get to resolve with an unsuccessful response
+    mockedAxios.get.mockResolvedValueOnce({
+      data: { success: false },
+    });
+
+    render(<App />);
+
+    // Waiting for the error message to be displayed
+    await waitFor(() => {
+      expect(screen.getByText("Failed to fetch data")).toBeInTheDocument();
+    });
+  });
+
   it("displays an error message when fetching data fails", async () => {
     // Mocking axios.get to reject with an error
     mockedAxios.get.mockRejectedValueOnce(new Error("Error fetching data"));
