@@ -187,6 +187,44 @@ describe("App Component Tests", () => {
     });
   });
 
+  it("should display an error  message when there is a network or server error during form data submission.", async () => {
+    // Mocking the axios.post call to reject with an error
+    mockedAxios.post.mockRejectedValueOnce(new Error("Error submitting data"));
+
+    render(<App />);
+
+    // Opening the form
+    fireEvent.click(screen.getByText("Add"));
+
+    // Filling in the form fields
+    fireEvent.change(screen.getByTestId("name-input"), {
+      target: { value: "John Doe" },
+    });
+    fireEvent.change(screen.getByTestId("email-input"), {
+      target: { value: "john@example.com" },
+    });
+    fireEvent.change(screen.getByTestId("mobile-input"), {
+      target: { value: "1234567890" },
+    });
+    fireEvent.change(screen.getByTestId("country-input"), {
+      target: { value: "USA" },
+    });
+    fireEvent.change(screen.getByTestId("address-input"), {
+      target: { value: "123 Main St" },
+    });
+    fireEvent.change(screen.getByTestId("gender-select"), {
+      target: { value: "male" },
+    });
+
+    // Submitting the form
+    fireEvent.click(screen.getByTestId("submit-button"));
+
+    // Waiting for the error message to be displayed
+    await waitFor(() => {
+      expect(screen.getByText("Error submitting data")).toBeInTheDocument();
+    });
+  });
+
   it("toggles the visibility of the Add section when the Add button is clicked", async () => {
     render(<App />);
     const addButton = screen.getByText("Add");
