@@ -552,4 +552,45 @@ describe("App Component Tests", () => {
       ).toBeInTheDocument();
     });
   });
+
+  it("displays an error message when trying to submit an incomplete edit form", async () => {
+    // Setup initial state where there's at least one entry to edit
+    mockedAxios.get.mockResolvedValueOnce({
+      data: {
+        success: true,
+        data: [
+          {
+            _id: "1",
+            name: "Elon Musk",
+            email: "ElonMuskk@example.com",
+            mobile: "1234567890",
+            country: "USA",
+            address: "Hollywood road",
+            gender: "male",
+          },
+        ],
+      },
+    });
+
+    render(<App />);
+
+    // Waiting for the initial data to load and display
+    await waitFor(() => screen.getByText("Elon Musk"));
+
+    // clicking the edit option for the current entry
+    fireEvent.click(screen.getByTestId("edit-button"));
+
+    // here we are clearing one of the fields to simulate an incomplete form
+    // clear the name field
+    fireEvent.change(screen.getByTestId("name-input"), {
+      target: { value: "" },
+    });
+
+    // Attempt to submit the form
+    fireEvent.click(screen.getByTestId("submit-button"));
+
+    // Checking for the error message
+    const errorMessage = await screen.findByText("Please fill in all fields.");
+    expect(errorMessage).toBeInTheDocument();
+  });
 });
