@@ -17,6 +17,7 @@ describe("App Component Tests", () => {
     // mockedAxios.get.mockReset();
     // mockedAxios.post.mockReset();
   });
+
   // Testing to check if all table headers are rendered correctly
   it("should render all table headers correctly", async () => {
     mockedAxios.get.mockResolvedValue({
@@ -592,5 +593,48 @@ describe("App Component Tests", () => {
     // Checking for the error message
     const errorMessage = await screen.findByText("Please fill in all fields.");
     expect(errorMessage).toBeInTheDocument();
+  });
+
+  it("should display 'Failed to update entry. Please try again.' when the server response for an update is unsuccessful", async () => {
+    // Here we are assuming there's at least one entry to edit, and mocking the initial GET request to return this data
+    mockedAxios.get.mockResolvedValueOnce({
+      data: {
+        success: true,
+        data: [
+          {
+            _id: "1",
+            name: "Test User",
+            email: "test@example.com",
+            mobile: "1234567890",
+            country: "USA",
+            address: "123 Main St",
+            gender: "male",
+          },
+        ],
+      },
+    });
+
+    // Mocking the axios.put call to resolve with an unsuccessful response for the update
+    mockedAxios.put.mockResolvedValueOnce({
+      data: { success: false },
+    });
+
+    render(<App />);
+
+    // Simulating user actions to edit an entry
+    await waitFor(() => fireEvent.click(screen.getByTestId("edit-button")));
+
+    fireEvent.change(screen.getByTestId("name-input"), {
+      target: { value: "Updated Name" },
+    });
+
+    fireEvent.click(screen.getByTestId("submit-button"));
+
+    // Waiting for the error message to be displayed
+    await waitFor(() => {
+      expect(
+        screen.getByText("Failed to update entry. Please try again.")
+      ).toBeInTheDocument();
+    });
   });
 });
