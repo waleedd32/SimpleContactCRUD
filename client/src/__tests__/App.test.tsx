@@ -637,4 +637,53 @@ describe("App Component Tests", () => {
       ).toBeInTheDocument();
     });
   });
+
+  it("should display an error message when there's a network or server error during form data update", async () => {
+    // Mocking the axios.get call to return some initial data with at least one entry
+    mockedAxios.get.mockResolvedValueOnce({
+      data: {
+        success: true,
+        data: [
+          {
+            _id: "1",
+            name: "John Doe",
+            email: "john@example.com",
+            mobile: "1234567890",
+            country: "USA",
+            address: "123 Main St",
+            gender: "male",
+          },
+        ],
+      },
+    });
+
+    // Mocking the axios.put call to reject with an error
+    mockedAxios.put.mockRejectedValueOnce(
+      new Error("Error updating data/Network Error")
+    );
+
+    render(<App />);
+
+    // Waiting for the initial data to load
+    await waitFor(() => screen.getByText("John Doe"));
+
+    fireEvent.click(screen.getByTestId("edit-button"));
+
+    fireEvent.change(screen.getByTestId("name-input"), {
+      target: { value: "John Updated" },
+    });
+
+    fireEvent.change(screen.getByTestId("email-input"), {
+      target: { value: "johnupdated@example.com" },
+    });
+
+    fireEvent.click(screen.getByTestId("submit-button"));
+
+    // Waiting for the error message to be displayed
+    await waitFor(() => {
+      expect(
+        screen.getByText("Error updating data. Please try again.")
+      ).toBeInTheDocument();
+    });
+  });
 });
