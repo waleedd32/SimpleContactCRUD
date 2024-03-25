@@ -686,4 +686,42 @@ describe("App Component Tests", () => {
       ).toBeInTheDocument();
     });
   });
+
+  it("closes the edit form and clears form errors on handleClose", async () => {
+    mockedAxios.get.mockResolvedValueOnce({
+      data: {
+        success: true,
+        data: [
+          {
+            _id: "1",
+            name: "Jussi",
+            email: "john@example.com",
+            mobile: "1234567890",
+            country: "USA",
+            address: "123 Main St",
+            gender: "male",
+          },
+        ],
+      },
+    });
+
+    render(<App />);
+
+    // Waiting for the initial data to load
+    await waitFor(() => screen.getByText("Jussi"));
+
+    // Opening the edit form
+    fireEvent.click(screen.getByTestId("edit-button"));
+
+    // Making sure the form is visible
+    expect(screen.queryByTestId("form-table")).toBeInTheDocument();
+
+    // Closing the form using the handleClose function
+    fireEvent.click(screen.getByTestId("close-button"));
+
+    // Checking if the edit section is no longer visible
+    await waitFor(() =>
+      expect(screen.queryByTestId("form-table")).not.toBeInTheDocument()
+    );
+  });
 });
