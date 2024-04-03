@@ -15,7 +15,7 @@ Simple Contact is a web application designed to manage contacts efficiently. Use
 - Update Contact: Edit details of existing contacts.
 - Delete Contact: Remove contact information from the database.
 
-## Features
+## Technical Stack
 
 - Front-end: ReactJS
 - Back-end: Node.js, Express
@@ -24,7 +24,26 @@ Simple Contact is a web application designed to manage contacts efficiently. Use
 
 (Currently working on implementing additional features and improving the UI/UX.)
 
-## Features
+## Testing
+
+The application's reliability is ensured through comprehensive testing with React Testing Library and Vitest. External API dependencies like axios are mocked to maintain test robustness. Tests cover:
+
+- Component rendering and user-triggered updates.
+- Form handling, including validation and submission.
+- Server interactions for creating, reading, updating, deleting data, and handling errors.
+- UI response to network conditions.
+
+## Test Coverage
+
+With the current suite of tests, we have achieved significant coverage metrics which contribute to the stability and maintainability of the application:
+
+| File           | % Statements | % Branch | % Functions | % Lines | Uncovered Line #s |
+| -------------- | ------------ | -------- | ----------- | ------- | ----------------- |
+| All files      | 100          | 98.14    | 100         | 100     |                   |
+| src            | 100          | 98.07    | 100         | 100     |                   |
+| App.tsx        | 100          | 98.07    | 100         | 100     | 81                |
+| src/components | 100          | 100      | 100         | 100     |                   |
+| FormTable.tsx  | 100          | 100      | 100         | 100     |                   |
 
 ## Live Demo
 
@@ -71,4 +90,12 @@ yarn dev
 
 ```bash
 yarn dev
+```
+
+## Running Test
+
+To run the automated test suite and generate a coverage report, use the following command in your terminal:
+
+```bash
+yarn test
 ```
