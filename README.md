@@ -2,7 +2,7 @@
 
 ## Project Status
 
-**Note:** This project is currently in development. Some features might be incomplete or subject to change.
+**Note:** This project is currently in development. Some features might be incomplete or subject to change. However, it's functional and already deployed. Feel free to explore the live version [here](https://simple-contact.vercel.app/)
 
 ## Description
 
