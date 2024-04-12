@@ -86,6 +86,34 @@ const App: React.FC = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const closeFormOnClickOutside = (event: Event) => {
+      console.log("Clicked element:", event.target);
+
+      // Directly checking if the clicked element is the `.addContainer`
+      if ((event.target as Element).classList.contains("addContainer")) {
+        console.log("Click was on addContainer but outside the form content");
+        setIsAddSectionVisible(false);
+        setIsEditSectionVisible(false);
+      }
+    };
+
+    // Selecting the `.addContainer` directly
+    const formContainer = document.querySelector(".addContainer");
+
+    // Making sure `.addContainer` exists before adding the event listener
+    if (formContainer) {
+      formContainer.addEventListener("mousedown", closeFormOnClickOutside);
+    }
+
+    // Cleaning up
+    return () => {
+      if (formContainer) {
+        formContainer.removeEventListener("mousedown", closeFormOnClickOutside);
+      }
+    };
+  }, [isAddSectionVisible, isEditSectionVisible]);
+
   const validateForm = () => {
     const { name, email, mobile, country, address, gender } = formData;
     // Check if any of the fields are empty
