@@ -724,4 +724,36 @@ describe("App Component Tests", () => {
       expect(screen.queryByTestId("form-table")).not.toBeInTheDocument()
     );
   });
+
+  it("does not close the add/edit form when clicking inside the form container", async () => {
+    render(<App />);
+
+    fireEvent.click(screen.getByText("Add"));
+
+    // Making sure that form is visible before simulating the inside click.
+    let form = screen.getByTestId("form-table");
+    expect(form).toBeInTheDocument();
+
+    // Simulating clicking inside the form on the name input.
+    const nameInput = screen.getByTestId("name-input");
+    fireEvent.mouseDown(nameInput);
+
+    // The form should still be visible after clicking inside it.
+    expect(screen.getByTestId("form-table")).toBeInTheDocument();
+  });
+
+  it("closes the add/edit form when clicking outside the form container", () => {
+    render(<App />);
+
+    fireEvent.click(screen.getByText("Add"));
+
+    // Making sure that form is visible before simulating the outside click.
+    expect(screen.getByTestId("form-table")).toBeInTheDocument();
+
+    const addContainer = screen.getByTestId("form-table");
+    fireEvent.mouseDown(addContainer);
+
+    // Now, the form should be closed.
+    expect(screen.queryByTestId("form-table")).not.toBeInTheDocument();
+  });
 });
