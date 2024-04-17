@@ -287,7 +287,7 @@ describe("App Component Tests", () => {
 
   it("displays an error message when fetching data fails", async () => {
     // Mocking axios.get to reject with an error
-    mockedAxios.get.mockRejectedValueOnce(new Error("Error fetching data"));
+    mockedAxios.get.mockRejectedValueOnce({});
 
     render(<App />);
 
