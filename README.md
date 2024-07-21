@@ -14,6 +14,7 @@ Simple Contact is a web application designed to manage contacts efficiently. Use
 - Read Contacts: View a list of all saved contacts.
 - Update Contact: Edit details of existing contacts.
 - Delete Contact: Remove contact information from the database.
+- Loading Skeleton: Displays a skeleton loader while fetching data, improving user experience.
 
 ## Technical Stack
 
@@ -23,6 +24,10 @@ Simple Contact is a web application designed to manage contacts efficiently. Use
 - Others: axios for API requests, cors for cross-origin resource sharing, mongoose for object data modeling (ODM), dotenv for environment variable management.
 
 (Currently working on implementing additional features and improving the UI/UX.)
+
+## Loading Skeleton
+
+A skeleton loader has been added to improve user experience during data fetching. It provides visual feedback and mimics the table structure while content is loading.
 
 ## Testing
 
