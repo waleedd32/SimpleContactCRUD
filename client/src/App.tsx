@@ -50,6 +50,7 @@ const App: React.FC = () => {
   });
 
   const [dataList, setDataList] = useState<DataListEntry[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   axios.defaults.withCredentials = true;
 
@@ -68,10 +69,13 @@ const App: React.FC = () => {
   console.log("datalist:", dataList);
 
   const fetchData = async () => {
+    setIsLoading(true);
+
     try {
       const response = await axios.get("/");
       if (response.data.success) {
         setDataList(response.data.data);
+
         setError("");
       } else {
         setError("Failed to fetch data");
@@ -80,6 +84,7 @@ const App: React.FC = () => {
       console.log("error:", (error as Error).message);
       setError((error as Error).message || "Error fetching data");
     }
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -274,7 +279,19 @@ const App: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {dataList.length > 0 ? (
+            {isLoading ? (
+              <tr>
+                <td colSpan={7}>
+                  <div className="skeleton-loader">
+                    <div className="skeleton-row"></div>
+                    <div className="skeleton-row"></div>
+                    <div className="skeleton-row"></div>
+                    <div className="skeleton-row"></div>
+                    <div className="skeleton-row"></div>
+                  </div>
+                </td>
+              </tr>
+            ) : dataList.length > 0 ? (
               dataList.map((el) => {
                 console.log(el);
                 return (
