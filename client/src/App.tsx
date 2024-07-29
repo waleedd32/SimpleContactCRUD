@@ -280,7 +280,7 @@ const App: React.FC = () => {
           </thead>
           <tbody>
             {isLoading ? (
-              <tr>
+              <tr data-testid="loading-skeleton">
                 <td colSpan={7}>
                   <div className="skeleton-loader">
                     <div className="skeleton-row"></div>

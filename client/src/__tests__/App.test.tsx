@@ -756,4 +756,88 @@ describe("App Component Tests", () => {
     // Now, the form should be closed.
     expect(screen.queryByTestId("form-table")).not.toBeInTheDocument();
   });
+
+  it("displays the loading skeleton while fetching data", async () => {
+    // Delaying the mock response to simulate loading
+    mockedAxios.get.mockResolvedValue(
+      new Promise((resolve) =>
+        setTimeout(
+          () =>
+            resolve({
+              data: {
+                success: true,
+                data: [
+                  {
+                    _id: "1",
+                    name: "John Doe",
+                    email: "john@example.com",
+                    mobile: "1234567890",
+                    country: "USA",
+                    address: "123 Main St",
+                    gender: "male",
+                  },
+                ],
+              },
+            }),
+          500
+        )
+      )
+    ); // Delaying the response by 500ms
+
+    render(<App />);
+
+    // Initially, the skeleton loader should be visible
+    expect(screen.getByTestId("loading-skeleton")).toBeInTheDocument();
+    expect(screen.queryByText("John Doe")).not.toBeInTheDocument();
+
+    // Waiting for data to load and skeleton to be replaced by actual data
+    await waitFor(() => {
+      expect(screen.queryByTestId("loading-skeleton")).not.toBeInTheDocument();
+      expect(screen.getByText("John Doe")).toBeInTheDocument();
+    });
+  });
+
+  // you can also do it like this
+
+  // it("displays the loading skeleton while fetching data", async () => {
+  //   // Create a promise that we can resolve manually
+  //   let resolveGet;
+  //   const getPromise = new Promise((resolve) => {
+  //     resolveGet = resolve;
+  //   });
+
+  //   // Mock the axios.get to return our manually controlled promise
+  //   mockedAxios.get.mockReturnValueOnce(getPromise);
+
+  // or can also use this: mockedAxios.get.mockReturnValue(getPromise);
+
+  //   render(<App />);
+
+  //   // Checking that the skeleton loader is displayed
+  //   expect(screen.getByTestId("loading-skeleton")).toBeInTheDocument();
+
+  //   // Resolve the GET request with some data
+  //   resolveGet({
+  //     data: {
+  //       success: true,
+  //       data: [
+  //         {
+  //           _id: "1",
+  //           name: "John Doe",
+  //           email: "john@example.com",
+  //           mobile: "1234567890",
+  //           country: "USA",
+  //           address: "123 Main St",
+  //           gender: "male",
+  //         },
+  //       ],
+  //     },
+  //   });
+
+  //   // Wait for the actual data to be displayed
+  //   await waitFor(() => {
+  //     expect(screen.queryByTestId("loading-skeleton")).not.toBeInTheDocument();
+  //     expect(screen.getByText("John Doe")).toBeInTheDocument();
+  //   });
+  // });
 });
